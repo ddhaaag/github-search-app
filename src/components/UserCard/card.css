@@ -1,0 +1,12 @@
+.card {
+    display: flex;
+    text-align: center;
+}
+
+.card__info-name {
+    font-size: 26px;
+}
+
+.card__info-link {
+    font-size: 18px;
+}

@@ -1,0 +1,11 @@
+.result {
+    font-size: 22px;
+    width: 210px;
+    text-align: center;
+}
+
+img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+}
