@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from 'semantic-ui-react'
 import ReactPaginate from 'react-paginate'
-import axios from 'axios'
+import { PaginationButtons } from './UserDetail.styled'
 import UserCard from '../UserCard/UserCard'
 import Repos from '../Repos/Repos'
 
@@ -56,17 +56,19 @@ const UserDetail = ({ match }) => {
         </Grid.Column>
         <Grid.Column width={6}>{renderRepos()}</Grid.Column>
       </Grid.Row>
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={'paginationButtons'}
-        previousLinkClassName={'previousButtons'}
-        nextLinkClassName={'nextButtons'}
-        disabledClassName={'paginationDisabled'}
-        activeClassName={'paginationActive'}
-      />
+      <PaginationButtons>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={'paginationButtons'}
+          previousLinkClassName={'previousButtons'}
+          nextLinkClassName={'nextButtons'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationActive'}
+        />
+      </PaginationButtons>
     </Grid>
   )
 }

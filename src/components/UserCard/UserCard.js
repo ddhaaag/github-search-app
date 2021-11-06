@@ -1,7 +1,7 @@
 import React from 'react'
-import './card.css'
 import Loader from 'react-loader-spinner'
-import { Icon, Image, Item } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
+import { StyledImage } from './UserCard.styled'
 
 const UserCard = ({ item, loading, user }) => {
   // console.log('UserData', item)
@@ -21,7 +21,7 @@ const UserCard = ({ item, loading, user }) => {
   }
   return (
     <>
-      <Image src={user.avatar_url} size="small" circular />
+      <StyledImage src={user.avatar_url} />
       <h2>{user.name}</h2>
       <p>
         <a href={user.html_url} target="_blank">

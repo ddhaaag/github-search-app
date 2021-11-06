@@ -1,24 +1,19 @@
 import React from 'react'
 
-import { List } from 'semantic-ui-react'
-import './result.css'
-
+import { List, ListItem, ListHeader, ListDescription } from './Repos.styled'
 const Repos = ({ repos }) => {
   console.log(repos)
   // const { public_repos } = item
 
   return (
-    <>
-      {/* <h1>Repositories ({public_repos})</h1> */}
+    <List>
       {repos.map((repo) => (
-        <List.Item key={repo.id}>
-          <List.Content>
-            <List.Header as="h2">{repo.name} </List.Header>
-            <List.Description as="p">{repo.description}</List.Description>
-          </List.Content>
-        </List.Item>
+        <ListItem key={repo.id}>
+          <ListHeader>{repo.name} </ListHeader>
+          <ListDescription>{repo.description}</ListDescription>
+        </ListItem>
       ))}
-    </>
+    </List>
   )
 }
 
