@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 export const initialState = {
   loading: false,
@@ -36,15 +37,17 @@ export const usersSelector = (state) => state.users
 // The reducer
 export default usersSlice.reducer
 
-export function fetchUsers(username) {
+export function fetchUsers(debouncedUsername) {
   return async (dispatch) => {
     dispatch(getUsers())
 
     try {
-      const response = await fetch(`${'https://api.github.com/search/users?q='}${username}`)
-      const data = await response.json()
+      const response = await axios.get(
+        `${'https://api.github.com/search/users?q='}${debouncedUsername}`
+      )
 
-      dispatch(submitData(data.items))
+      console.log('LOGIN', response.data.items)
+      dispatch(submitData(response.data.items))
     } catch (error) {
       dispatch(getUsersFailure())
     }

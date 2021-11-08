@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 export const initialState = {
   loading: false,
@@ -34,12 +35,11 @@ export function fetchRepos(id) {
     dispatch(getRepos())
 
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `https://api.github.com/user/${id}/repos?per_page=100&page=<page_number>`
       )
-      const data = await response.json()
 
-      dispatch(getReposSuccess(data))
+      dispatch(getReposSuccess(response.data))
     } catch (error) {
       dispatch(getReposFailure())
     }

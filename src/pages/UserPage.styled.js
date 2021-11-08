@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 export const PaginationButtons = styled.div`
   .paginationButtons {
@@ -32,7 +33,6 @@ export const StyledUsersPage = styled.div`
   width: 100vw;
   background-color: #282c34;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
@@ -49,7 +49,7 @@ export const Input = styled.input`
   font-size: 18px;
   padding: 10px;
   margin: 10px;
-  width: 50%;
+  width: 100%;
   display: block;
   margin-right: auto;
   margin-left: auto;
@@ -57,6 +57,7 @@ export const Input = styled.input`
   background: #ccc;
   border: none;
   border-radius: 3px;
+  box-shadow: 5px 5px 15px 5px #000000;
   &:focus {
     outline: 3px solid red;
   }
@@ -64,6 +65,26 @@ export const Input = styled.input`
     color: #000;
   }
 `
+export const Dropdown = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+`
+export const DropdownContent = styled.div`
+  min-width: 50%;
+  background-color: #f6f6f6;
+  z-index: 1;
+`
+
 export const UsernameTitle = styled.h2`
   font-size: 1.5rem;
+`
+export const DropdownLink = styled(NavLink)`
+  color: black;
+  padding: 12px 16px;
+  text-align: center;
+  display: block;
+  &:hover {
+    background-color: #ddd;
+  }
 `

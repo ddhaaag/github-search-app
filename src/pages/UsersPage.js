@@ -1,87 +1,57 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Image, List } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { useDebounce } from 'use-debounce'
 import {
   PaginationButtons,
   StyledUsersPage,
   Heading,
   Input,
   UsernameTitle,
+  Dropdown,
+  DropdownContent,
+  DropdownLink,
 } from './UserPage.styled'
-import { fetchUsers, usersSelector, getUsername, submitData } from '../slices/users'
-import ReactPaginate from 'react-paginate'
+import { fetchUsers, usersSelector } from '../slices/users'
+import UserListItem from '../components/UserListItem/UserListItem'
 
 // Redux state is now in the props of the component
 const UsersPage = () => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { users, loading, hasErrors } = useSelector(usersSelector)
-  // pagination
-  const [currentPage, setCurrentPage] = useState(0)
-  const [usersPerPage] = useState(5)
+  const [debouncedUsername] = useDebounce(username, 1000)
 
-  const indexOfFirstUser = currentPage * usersPerPage
-  const currentUsers = users.slice(indexOfFirstUser, indexOfFirstUser + usersPerPage)
-
-  const pageCount = Math.ceil(users.length / usersPerPage)
-
-  const changePage = ({ selected }) => {
-    setCurrentPage(selected)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    dispatch(fetchUsers(username))
-  }
-  const handleChange = (event) => {
-    setUsername(event.target.value)
-  }
+  useEffect(() => {
+    if (debouncedUsername) {
+      dispatch(fetchUsers(debouncedUsername))
+    } else {
+      setUsername('')
+    }
+  }, [debouncedUsername])
 
   const renderUsers = () => {
-    if (loading) return <p>Loading users...</p>
+    if (loading) return <h3>Loading users...</h3>
     if (hasErrors) return <p>Unable to display users</p>
 
-    return currentUsers.map((user) => (
-      <List selection verticalAlign="middle" key={user.id}>
-        <List.Item>
-          <Link to={`/users/${user.id}`}>
-            <Image size="small" avatar src={user.avatar_url} />
-            <List.Content>
-              <UsernameTitle>{user.login}</UsernameTitle>
-            </List.Content>
-          </Link>
-        </List.Item>
-      </List>
-    ))
+    return users.map((user) => <UserListItem key={user.id} user={user} />)
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <Input type="text" value={username} onChange={handleChange} placeholder="Enter username" />
-      </form>
+      <Dropdown>
+        <DropdownContent>
+          <Input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter username"
+          />
+          {renderUsers()}
+        </DropdownContent>
+      </Dropdown>
       {users.length === 0 && (
         <StyledUsersPage>
           <Heading>USERS PAGE</Heading>
         </StyledUsersPage>
-      )}
-
-      {renderUsers()}
-      {users.length > 0 && (
-        <PaginationButtons>
-          <ReactPaginate
-            previousLabel={'Previous'}
-            nextLabel={'Next'}
-            pageCount={pageCount}
-            onPageChange={changePage}
-            containerClassName={'paginationButtons'}
-            previousLinkClassName={'previousButtons'}
-            nextLinkClassName={'nextButtons'}
-            disabledClassName={'paginationDisabled'}
-            activeClassName={'paginationActive'}
-          />
-        </PaginationButtons>
       )}
     </div>
   )
