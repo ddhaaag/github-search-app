@@ -22,6 +22,14 @@ const Nav = () => {
         Users
       </StyledLink>
       <StyledLink
+        to="/favorite"
+        activeStyle={{
+          color: 'red',
+        }}
+      >
+        Favorite
+      </StyledLink>
+      <StyledLink
         to="/about"
         activeStyle={{
           color: 'red',
