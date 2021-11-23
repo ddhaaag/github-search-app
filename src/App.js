@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom'
 import UsersPage from './pages/UsersPage'
 import HomePage from './pages/HomePage'
+import FavoritePage from './pages/FavoritePage'
 import AboutPage from './pages/AboutPage'
 import Nav from './components/Nav/Nav'
 import UserDetail from './components/Users/UserDetail'
@@ -22,6 +23,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/users" exact component={UsersPage} />
+          <Route path="/favorite" exact component={FavoritePage} />
           <Route path="/about" exact component={AboutPage} />
           <Route path="/users/:id" component={UserDetail} />
         </Switch>

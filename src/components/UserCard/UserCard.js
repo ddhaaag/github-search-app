@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Loader from 'react-loader-spinner'
 import { Icon } from 'semantic-ui-react'
-import { StyledImage } from './UserCard.styled'
+import { StyledContainer, StyledImage, StyledMiddleContainer, StyledText } from './UserCard.styled'
 
-const UserCard = ({ item, loading, user }) => {
-  // console.log('UserData', item)
+import { useDispatch } from 'react-redux'
+import { AddFavoriteUsers } from '../../slices/favoriteUser'
+
+const UserCard = ({ loading, user }) => {
+  const [disable, setDisable] = useState(false)
+  const dispatch = useDispatch()
+
+  const handleClick = () => {
+    setDisable(true)
+    dispatch(AddFavoriteUsers(user))
+  }
 
   if (loading) {
     return (
@@ -21,7 +30,14 @@ const UserCard = ({ item, loading, user }) => {
   }
   return (
     <>
-      <StyledImage src={user.avatar_url} />
+      <StyledContainer>
+        <StyledImage src={user.avatar_url} />
+        <StyledMiddleContainer>
+          <StyledText onClick={handleClick} disabled={disable}>
+            Add to favorite
+          </StyledText>
+        </StyledMiddleContainer>
+      </StyledContainer>
       <h2>{user.name}</h2>
       <p>
         <a href={user.html_url} target="_blank">
